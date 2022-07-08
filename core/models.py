@@ -25,7 +25,6 @@ class Actor(models.Model):
 class Director(models.Model):
     firstname = models.CharField(max_length=255, blank=False, null=False, validators=[validators.RegexValidator(regex=r'[a-zA-Z]+', message='Please use only letters A-Z')])
     lastname = models.CharField(max_length=255, blank=False, null=False, validators=[validators.RegexValidator(regex=r'[a-zA-Z]+', message='Please use only letters A-Z')])
-    date_of_birth = models.DateField(validators=[validators.MaxValueValidator(limit_value=datetime.date.today())])
     MALE = 'M'
     FEMALE = 'F'
     YEAR_IN_SCHOOL_CHOICES = [
@@ -50,7 +49,7 @@ class Character(models.Model):
         return f'{self.firstname} {self.lastname}'
 
 class Movie(models.Model):
-    name = models.CharField(max_length=255, blank=False, null=False, validators=[validators.RegexValidator(regex=r"[a-zA-Z0-9- '`(){}[]&]+", message='Please use only letters A-Z, numbers and special characters')])
+    name = models.CharField(max_length=255, blank=False, null=False, validators=[validators.RegexValidator(regex=r"[a-zA-Z0-9 -]+", message='Please use only letters A-Z, numbers and special characters')])
     release_date = models.DateField(validators=[validators.MaxValueValidator(limit_value=datetime.date.today())])
     characters = models.ManyToManyField(Character)
     director = models.ForeignKey(to=Director, on_delete=models.PROTECT, )
